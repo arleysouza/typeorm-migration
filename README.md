@@ -7,8 +7,8 @@ Projeto usado para testar o uso de migration. Esta aplicação é uma modificaç
 
 É necessário setar os parâmetros de acesso ao SGBD PostgreSQL no arquivo `src/add-data-source.ts`.
 
-## Teste de migração
-A migração consiste em um arquivo JS/TS com uma classe com os métodos `up` e `down`. No método `up` estão as cláusulas SQL para criar a migração no SGBD e no método estão cláusulas SQL para desfazer a migração no SGBD.
+## Migração
+A migração consiste em uma classe com os métodos `up` e `down`. No método `up` estão as cláusulas SQL para criar a migração no SGBD e no método `down` estão cláusulas SQL para desfazer a migração no SGBD.
 Utilizaremos os comandos `migration:generate` para criar um arquivo de migração, `migration:run` para submeter as cláusulas SQL do arquivo de migração no SGBD e `migration:revert` para desfazer a última migração, ou seja, o comando `migration:run` executará o método `up` do arquivo de migração e `migration:revert` executará o método `down` do arquivo de migração.
 
 Na propriedade `scripts` do arquivo de configuração `package.json` foram colocados os comandos de migração:
@@ -41,3 +41,6 @@ Como resultado será criada as tabelas `usuarios`, `gastos` e `migrations`. Na t
 npm run migration:revert
 ```
 Como resultado serão executadas as cláusulas SQL do método `down` do último arquivo de migração submetido ao SGBD.
+
+
+**Observação:** é importante que a propriedade `synchronize` do arquivo de configuração `package.json` esteja como `false`, para que modificações nas entidades não sejam atualizadas no SGBD quando você subir a aplicação usando `npm run dev` ou `npm run start`.  
